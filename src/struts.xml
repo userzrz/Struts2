@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <!--设置用户页面主题-->
+    <constant name="struts.ui.theme" value="simple"/>
+    <!--处理中文乱码的问题-->
+    <constant name="struts.i18n.encoding" value="utf-8"/>
+    <!--开启动态调用方法 login!bb.action-->
+    <constant name="struts.enable.DynamicMethodInvocation" value="true"/>
+    <!--创建一个default包，继承Struts2的struts-default包-->
+    <!--package：(将oction,result封装在package包中)-->
+    <!--name:唯一，被其它包引用-->
+    <!--namespace:可选，定义action命名空间-->
+    <package name="default" namespace="/" extends="struts-default">
+        <!--接收处理 /helloWorld.action 请求，并根据返回结果跳转-->
+        <action name="hellow" class="cn.strutsdemo.HelloWorldAction">
+            <!--结果为helloWord时跳转到下面的jsp界面-->
+            <result name="hhh">/WEB-INF/jsp/helloWorld.jsp</result>
+            <result name="success">/WEB-INF/jsp/success.jsp</result>
+        </action>
+        <action name="login" class="cn.strutsdemo.LoginAction">
+            <!--返回success跳转到success.jsp，返回.......jsp-->
+            <result name="input">/WEB-INF/jsp/login.jsp</result>
+            <result name="success">/WEB-INF/jsp/success.jsp</result>
+            <result name="error">/WEB-INF/jsp/fail.jsp</result>
+        </action>
+        <action name="h" class="cn.strutsdemo.Dmeo">
+            <!--返回success跳转到success.jsp，返回.......jsp-->
+            <result name="c">/WEB-INF/jsp/helloWorld2.jsp</result>
+        </action>
+    </package>
+    <package name="user" namespace="/" extends="struts-default">
+        <!--请求action找不到时默认走该action-->
+        <default-action-ref name="defaultAction"></default-action-ref>
+        <!--全局结果找不到返回的result时走该global-->
+        <global-results>
+            <result name="error">/WEB-INF/jsp/error.jsp</result>
+        </global-results>
+
+        <action name="defaultAction">
+            <result>/WEB-INF/jsp/error.jsp</result>
+        </action>
+        <!-- 演示通配符 、结果类型-->
+        <action name="*User" class="cn.strutsdemo.Dmeo" method="{1}">
+            <result name="input">/WEB-INF/jsp/{1}.jsp</result>
+            <result name="success" type="redirectAction">${ww}</result>
+        </action>
+        <action name="common" class="cn.strutsdemo.Demo2" method="test">
+            <result name="uu">/WEB-INF/jsp/error.jsp</result>
+        </action>
+    </package>
+</struts>
